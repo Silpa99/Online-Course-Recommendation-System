@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}  <p>You are not logged in! &emsp;       
+  <a href="{% url 'login' %}">Log In</a></p>
+  <p>New User?  &emsp;        
+  <a href="{% url 'signup' %}">Sign Up</a></p>
+  {% endblock %}
