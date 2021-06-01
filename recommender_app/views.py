@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,get_object_or_404,redirect
 from django.shortcuts import render, redirect 
 from django.http import HttpResponse
 from django.forms import inlineformset_factory
@@ -10,7 +10,7 @@ from django.contrib.auth.models import Group
 from django.urls import reverse_lazy
 from django.views import generic
 from .models import *
-from .forms import CreateUserForm,CreateProfileForm
+from .forms import CreateUserForm,CreateProfileForm,RateForm
 
 # Create your views here.
 def SignUpView(request):
@@ -60,7 +60,7 @@ def CreateProfile(request):
 		return render(request, 'createprofile.html', {'form': form})
 
 def EditProfile(request,pk_test):
-	student=Student.objects.get(id=pk_test)
+	student=get_object_or_404(Student,id=pk_test)
 	form = CreateProfileForm(instance=student)
 	if request.method == 'POST':
 		form = CreateProfileForm(request.POST,instance=student)
@@ -68,4 +68,34 @@ def EditProfile(request,pk_test):
 			form.save()
 			return redirect('/')
 					
-	return render(request, 'editprofile.html', {'form': form})
+	return render(request, 'editprofile.html', {'student_id': student_id})
+
+def CourseList(request):
+	course_list=Course.objects.all()[:20]
+
+	'''form=RateForm()
+	if request.method == 'POST':
+		#print("printing",student.id,course.id,request.POST)
+		form = RateForm(request.POST)
+		if form.is_valid():
+			form.save()'''
+	context={'course_list':course_list}
+	return render(request,'courselist.html',context)
+
+
+def Rate(request,course_id):
+	if not request.user.is_authenticated:
+		return redirect("login")
+	course = get_object_or_404(Course,id=course_id)
+
+	if request.method == "POST":
+		print(request.POST)
+		rate = request.POST['rating']
+		ratingObject = Rating()
+		ratingObject.student_id   = request.user
+		ratingObject.course_id  = course
+		ratingObject.rating = rate
+		ratingObject.save()
+		messages.success(request,"Your Rating is submited ")
+		return redirect("courselist")
+	return render(request,'rate.html',{'course':course})

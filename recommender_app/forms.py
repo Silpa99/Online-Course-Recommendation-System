@@ -25,3 +25,18 @@ class RatingUpdateForm(forms.ModelForm):
         model=Rating
         fields=['rating']
 
+class RateForm(ModelForm):
+    #RATE_CHOICES = [('like', 'Like'),
+                   # ('dislike', 'Dislike'),]
+    #rating = forms.ChoiceField(choices=RATE_CHOICES, widget=forms.RadioSelect())
+    class Meta:
+
+        model=Rating
+        #rating = forms.ChoiceField(choices=RATE_CHOICES, widget=forms.RadioSelect())
+        fields=['student_id','course_id','rating']
+        '''widgets = {
+            'rating': forms.RadioSelect()
+        }'''
+        #favorite_fruit = forms.CharField(label='What is your favorite fruit?',
+                                        # widget=forms.RadioSelect(choices=FRUIT_CHOICES))
+

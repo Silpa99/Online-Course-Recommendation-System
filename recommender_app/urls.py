@@ -11,5 +11,7 @@ urlpatterns = [
     path('/', views.loginPage, name='home'),
     path('createprofile/', views.CreateProfile, name='createprofile'),
     path('logout/', views.logoutUser, name="logout"),
+    path('courselist/',views.CourseList,name="courselist"),
+    path('<str:course_id>/',views.Rate ,name='rate'),
 
 ]
