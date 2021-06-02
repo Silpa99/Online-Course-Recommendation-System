@@ -28,14 +28,16 @@ class Chapter(models.Model):
     assessment_answer= models.FileField(upload_to = user_directory_path,null = True)
 
 class Rating(models.Model):
-    student_id=models.ForeignKey(User, on_delete = models.CASCADE,null=True)
+    student_id=models.ForeignKey(Student, on_delete = models.CASCADE,null=True)
     course_id=models.ForeignKey(Course, on_delete = models.CASCADE,null=True)
     #rating=models.IntegerField(null = True)
     TYPE_SELECT = (
-        (1, 'Like'),
-        (-1, 'Dislike'),
+        ('1', 'Like'),
+        ('-1', 'Dislike'),
     )
-    rating= models.FloatField(choices=TYPE_SELECT,null=True)
+    rating= models.CharField(choices=TYPE_SELECT,max_length=30,null=True)
+    def __str__(self):
+        return self.rating
 
 
 

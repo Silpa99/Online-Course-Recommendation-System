@@ -5,7 +5,6 @@
 {% block content %}
 {% if user.is_authenticated %}
   Hi {{ user.username }}!
-  <p><a href="{% url 'createprofile' %}">Create Profile</a></p>
   <p><a href="{% url 'editprofile' user.id %}">Edit Profile</a></p>
   <p><a href="{% url 'logout' %}">View Recommendations</a></p>
   <p><a href="{% url 'courselist'%}">Courses</a></p>

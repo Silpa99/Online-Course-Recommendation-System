@@ -33,7 +33,7 @@ class RateForm(ModelForm):
 
         model=Rating
         #rating = forms.ChoiceField(choices=RATE_CHOICES, widget=forms.RadioSelect())
-        fields=['student_id','course_id','rating']
+        fields=['rating']
         '''widgets = {
             'rating': forms.RadioSelect()
         }'''

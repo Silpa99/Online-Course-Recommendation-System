@@ -49,7 +49,7 @@ def home(request):
 	return render(request ,"/",context)
 
 
-def CreateProfile(request):
+'''def CreateProfile(request):
 		form = CreateProfileForm()
 		if request.method == 'POST':
 				#print("printing",request.POST)
@@ -57,7 +57,7 @@ def CreateProfile(request):
 				if form.is_valid():
 					form.save()
 					return redirect('/')
-		return render(request, 'createprofile.html', {'form': form})
+		return render(request, 'createprofile.html', {'form': form})'''
 
 def EditProfile(request,pk_test):
 	student=get_object_or_404(Student,id=pk_test)
@@ -68,7 +68,7 @@ def EditProfile(request,pk_test):
 			form.save()
 			return redirect('/')
 					
-	return render(request, 'editprofile.html', {'student_id': student_id})
+	return render(request, 'editprofile.html', {'student.id': student.id})
 
 def CourseList(request):
 	course_list=Course.objects.all()[:20]
@@ -86,16 +86,17 @@ def CourseList(request):
 def Rate(request,course_id):
 	if not request.user.is_authenticated:
 		return redirect("login")
+	form=RateForm()
 	course = get_object_or_404(Course,id=course_id)
 
 	if request.method == "POST":
 		print(request.POST)
 		rate = request.POST['rating']
 		ratingObject = Rating()
-		ratingObject.student_id   = request.user
+		ratingObject.student_id   = request.user.student
 		ratingObject.course_id  = course
 		ratingObject.rating = rate
 		ratingObject.save()
 		messages.success(request,"Your Rating is submited ")
 		return redirect("courselist")
-	return render(request,'rate.html',{'course':course})
+	return render(request,'rate.html',{'course':course,'form':form})
