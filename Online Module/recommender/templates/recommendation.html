@@ -1,0 +1,43 @@
+{% extends 'base.html'%}
+
+{% block content %}
+<div class="container">
+{% if user.is_authenticated %}
+
+<h1 id="rec"><b>Recommendations</b></h1>
+<br>
+<br>
+<h3 id="rec1"><b>Top recommendations</b></h3>
+{% for course in hybrid %}
+<li class="courses2">
+    <a id="cname1" href="/course/{{course.id}}">{{course.name}}</a>
+</li>
+
+{% endfor %}
+<br>
+<h3 id="rec2"><b>Based on your interest</b></h3>
+{% for course in content %}
+<li class="courses2">
+    <a id="cname2" href="/course/{{course.id}}">{{course.name}}</a>
+</li>
+
+{% endfor %}
+<br>
+<h3 id="rec3"><b>Top rated by similar users</b></h3>
+{% for course in collab %}
+<li class="courses2">
+    <a id="cname3" href="/course/{{course.id}}">{{course.name}}</a>
+</li>
+
+{% endfor %}
+
+{% else %}
+
+<h2><b>Hello {{name}}, login to get recommendations</b></h2>
+<br>
+
+{% endif %}
+
+</div>
+
+{% endblock %}
